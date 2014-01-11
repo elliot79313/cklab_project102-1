@@ -1,0 +1,24 @@
+{
+  "name": "Test Screenshot feedback Extension",
+  "version": "1.0",
+  "description": "Make screenshot feedback system",
+  "background": {
+    "persistent": false,
+    "scripts": ["background.js"]
+  },
+  "page_action": {
+    "default_icon": "camera.png",
+    "default_title": "Take a screen shot!"
+  },
+   "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["Modal.css"],
+      "js": ["jquery-2.0.3.js", "jquery-2.0.3.min.js", "jquery.client.js", "Modal.js"]
+    }
+  ],
+  "permissions": [
+	"tabs", "*://*/*"
+  ],
+  "manifest_version": 2
+}
