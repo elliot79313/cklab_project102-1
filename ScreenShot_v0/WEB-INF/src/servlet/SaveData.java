@@ -16,10 +16,10 @@ public class SaveData extends HttpServlet {
 	
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 	static final String DB_URL = "jdbc:mysql://localhost:3306/";
-	static final String DB_NAME = "screenshot";
+	static final String DB_NAME = "screenshotrecord";
 
 	static final String USER = "root";
-	static final String PASS = "";
+	static final String PASS = "root";
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
@@ -35,6 +35,7 @@ public class SaveData extends HttpServlet {
 		String domain = request.getParameter("domain");
 		String msg = request.getParameter("msg");
 		String img = request.getParameter("img");
+		String SID = request.getParameter("SID");
 				
 		Connection conn = null;
 		PreparedStatement stmt = null;

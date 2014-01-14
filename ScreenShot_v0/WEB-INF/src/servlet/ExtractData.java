@@ -17,10 +17,10 @@ public class ExtractData extends HttpServlet {
 	
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 	static final String DB_URL = "jdbc:mysql://localhost:3306/";
-	static final String DB_NAME = "screenshot";
+	static final String DB_NAME = "screenshotrecord";
 
 	static final String USER = "root";
-	static final String PASS = "";
+	static final String PASS = "root";
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
@@ -38,7 +38,7 @@ public class ExtractData extends HttpServlet {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(DB_URL + DB_NAME, USER, PASS);
 			stmt = conn.createStatement();
-			String sql = "Select * from record where isdelete = 0";
+			String sql = "Select * from record where isdelete = 0 LIMIT 13";
 			ResultSet rs = stmt.executeQuery(sql);
 			JSONObject record = new JSONObject();
 			int index = 1;
@@ -46,7 +46,7 @@ public class ExtractData extends HttpServlet {
 				JSONObject temp = new JSONObject();
 				temp.put("time", rs.getString("time"));
 				temp.put("SID", rs.getString("SID"));
-//				temp.put("domain", rs.getString("domain"));
+				temp.put("domain", rs.getString("domain"));
 //				temp.put("msg", rs.getString("msg"));
 //				temp.put("img", rs.getString("img"));
 				record.put("" + index, temp);
