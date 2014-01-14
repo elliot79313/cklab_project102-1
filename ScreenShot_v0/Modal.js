@@ -67,6 +67,18 @@ function modal(title, msg) {
 		}
 		else{
 			// post(url, post_obj, function(data){alert("Thank for your feedback!")});
+			$.post( "http://localhost:8080/screenshot/SaveData",
+				{
+					time : $.now() ,
+					domain : location.href ,
+					msg : post_object["msg"],
+					img : post_object["img"]
+				},
+				function(data){
+					console.log("Server response", data);
+				},
+				"json"
+			);
 			console.log("obj", post_object);
 			$('#troubleClick').fadeIn(1000);
 			$boxes.remove();
