@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>ScreenShot-Record</title>
+		<link href="./css/css1.css" rel="stylesheet" type="text/css">
+		<style type="text/css"></style>
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script type="text/JavaScript" src="./js/js1.js"></script>
+		
+	</head>
+	
+	<body>
+		<div id="container">
+			<div id="searchbar">
+				<span>From:
+					<input id="datestart" style="width:70%;font-size:20px" type="datetime-local" value="2014-01-01T00:00:00"></input>
+				</span>
+				<br>
+				<span style="margin-left:20px">To:
+					<input id="dateend" style="width:70%;font-size:20px" type="datetime-local" value=""></input>
+				</span>
+				<br>
+				<span style="vertical-align:middle">Domain:
+					<span id="domain">未選<span id="dbtn" onclick="dropdown()" value="null"></span></span>
+					<div id="domaincontent" hidden="true" style=""></div>
+				</span>
+				<input id="searchbtn" type="submit" value="search" style="margin-left:5px;height:32px;width:100px;display:inline-block"></input>
+			</div>
+			<div id="side-list">
+				<ul id="side-ul">
+				</ul>
+			</div>
+			
+			<div id="content">
+				<div id="srcdata"><span>date:</span><br><span>domain:</span></div>
+				<div id="imagebox"><img id="recordimage" src=""></img></div>
+				<div id="msg">msg:</div>
+			</div>
+		</div>
+	</body>
