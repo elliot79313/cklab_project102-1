@@ -1,5 +1,5 @@
 {
-  "name": "Test Screenshot feedback Extension",
+  "name": "NTU Library Screenshot feedback Extension",
   "version": "1.0",
   "description": "Make screenshot feedback system",
   "background": {
@@ -20,5 +20,6 @@
   "permissions": [
 	"tabs", "*://*/*"
   ],
+  "web_accessible_resources":["white.png","jquery-2.0.3.min.map"],
   "manifest_version": 2
 }
