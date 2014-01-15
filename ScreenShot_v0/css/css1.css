@@ -29,33 +29,54 @@ body{
 	height:30px;
 	margin:5px 0px 0 0;
 	border:1px solid #9B9999;
+	overflow:hidden;
+	text-overflow:ellipsis;
 }
 
 #dbtn{
 	display:inline-block;
-	vertical-align:middle;
 	width: 0;
 	height: 0;
 	border-left: 7px solid transparent;
 	border-right: 7px solid transparent;
 	border-top: 13px solid #000;
-	position: relative;
-	margin-left: 230px;
+	position: absolute;
+	margin-left:-30px;
+	margin-top:15px;
+	z-index:9999;
 }
 #dbtn:hover{
 	background-color:#CCC;
 }
 
-
-#domaincontent{
-	background-color:white;
-	border:1px solid #CCC;
-	margin-left:72px;
+#searchbtn{
+	margin-left:5px;
+	height:32px;
+	width:100px;
+	display:inline-block;
+	vertical-align:70%;
 }
 
-.searchdomain{
+
+#domaincontent{
+	position:absolute;
+	background-color:white;
+	border:1px solid #CCC;
+	margin-left:73px;
+	margin-top:-10px;
+	z-index:9000;
+}
+
+#searchdomain{
 	border:0px;
 	border-bottom:1px solid #CCC;
+	width:294px;
+}
+
+.domainname{
+	width:294px;
+	overflow:hidden;
+	text-overflow:ellipsis;
 }
 
 .domainname:hover{
@@ -66,7 +87,7 @@ body{
 
 #side-list{
 	position:relative;
-	margin: 0px 0 20px 10px;
+	margin: -10px 0 20px 10px;
 	width: 500px;
 	height: 530px;
 	
@@ -136,6 +157,11 @@ li .remove button{
 #imagebox{
 	padding:10px 10px 10px 10px;
 	height:430px;
+}
+#recordimage{
+	width:730px;
+	height:430px;
+	
 }
 
 #msg{

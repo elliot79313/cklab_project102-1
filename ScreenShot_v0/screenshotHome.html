@@ -21,11 +21,12 @@
 					<input id="dateend" style="width:70%;font-size:20px" type="datetime-local" value=""></input>
 				</span>
 				<br>
-				<span style="vertical-align:middle">Domain:
-					<span id="domain">未選<span id="dbtn" onclick="dropdown()" value="null"></span></span>
-					<div id="domaincontent" hidden="true" style=""></div>
-				</span>
-				<input id="searchbtn" type="submit" value="search" style="margin-left:5px;height:32px;width:100px;display:inline-block"></input>
+				<div style="vertical-align:40%;display:inline-block">Domain:</div>
+				<span id="domain" value="null" style="display:inline-block">&nbsp未選</span>
+				<div id="dbtn"  onclick="dropdown()"></div>
+				<div style="background-color:white;width:28px;height:28px;position:absolute;margin-left:338px;margin-top:-39px;z-index=9500;"></div>
+				<div id="domaincontent" hidden="true" style=""></div>
+				<input id="searchbtn" type="submit" value="search"></input>
 			</div>
 			<div id="side-list">
 				<ul id="side-ul">
@@ -33,9 +34,10 @@
 			</div>
 			
 			<div id="content">
-				<div id="srcdata"><span>date:</span><br><span>domain:</span></div>
+				Date:<span id="recorddate"></span>
+				Domain:<span id="recorddomain"></span>
 				<div id="imagebox"><img id="recordimage" src=""></img></div>
-				<div id="msg">msg:</div>
+				Message:<div id="recordmsg"></div>
 			</div>
 		</div>
 	</body>

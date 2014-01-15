@@ -22,50 +22,65 @@ $(function(){
 				
 				//set domain bar
 				var $se=$("#domaincontent");
-				var $op=$('<div class="searchdomain" id="" onclick="searchdomain()" contentEditable="true">search here</div>');
+				var $op=$('<div id="searchdomain" id="" onclick="searchdomain()" contentEditable="true">search here</div>');
 				$se.append($op);
-				var arrtem=[];
+				arrtem=[];
 				$.each(data,function(i,item){
-					arrtem.push(item.domain);
-					if($.inArray(item.domain,arrtem)==-1||arrtem.length==1)
+					if($.inArray(item.domain,arrtem)==-1||arrtem.length==0)
 					{
-						var $op=$('<div class="domainname" onclick="hide(this)" id="'+item.domain+'">'+item.domain+'</div>');
+						var $op=$('<div class="domainname" onclick="hide(this)" id="">'+item.domain+'</div>');
+						$op.attr("id",item.domain);
+						//alert($op.attr("id"));
 						//$op.click(hide);
 						//$op.attr("id",item.domain);
-						alert($op.attr("id"));
 						$se.append($op);
 					}
+					arrtem.push(item.domain);
 				});
         }, 
         "json"
     );
 	
 	//set timebar initial
-	var d=new Date();
-	var dstr=d.getFullYear()+"-"+d.getMonth()+1+"-"+d.getDate()+"T"+d.getHours()+":"+d.getMinutes()+":00";
-	alert(dstr);//rewrite
-	$("#dateend").attr("value",dstr);
+//	var d=new Date();
+//	var dstr=d.getFullYear()+"-"
+//			+d.getMonth()+1+"-"
+//			+d.getDate()+"T"
+//			+d.getHours()+":"
+//			+d.getMinutes()+":00";
+//	alert(dstr);//rewrite
+//	$("#dateend").attr("value",dstr);
 	
 	//click search function
 	$("#searchbtn").click(function(){
 		var temd=new Date($("#datestart").val());
-		var timef=""+temd.getTime();
+		if(isNaN(temd)){
+			timef=null;
+		}
+		else{
+			var timef=""+temd.getTime();
+		}
 		temd=new Date($("#dateend").val());
-		var timet=""+temd.getTime();
-		var domains=$("#domain").val();
-		alert(domains);
+		if(isNaN(temd)){
+			timet=null;
+		}
+		else{
+			var timet=""+temd.getTime();
+		}
 		
-		alert("so far success");
-		
-		//post function, incomplete
+		var domains=$("#domain").attr("value");
+		if(domains=="null"){ 
+			domains=null;
+		}
+
 		$.get("SearchData",
 			{
 				time1 : timef,
-				time : timet,
+				time2 : timet,
 				domain : domains
 			},
 			function(data){
-				alert("hahaha");
+				
 				$ul.html("");
 				$.each(data,function(i,item){ 
 					nowtime=new Date();
@@ -73,10 +88,10 @@ $(function(){
                     var $li=$('<li><div class="time" id="" onclick="">'+"Date : "
 							+nowtime.toLocaleString()
                             +'</div><div class="remove"></div></li>');
-					$li.find("div").attr("onclick","showdetail("+ item.SID +")");
-					$li.find("div").attr("id",item.SID);
+					$li.find("div").attr("onclick","showdetail("+i+")");
+					$li.find("div").attr("id",i);
 					var $btn = $("<button>remove</button>"); 
-                    $btn.attr("onclick","deletedata("+ item.SID +")");
+                    $btn.attr("onclick","deletedata("+i+")");
                     $btn.click(function(){ 
                         $li.remove(); 
                         });
@@ -91,45 +106,57 @@ $(function(){
 
 });
 
+//domain dropdown and toggle
 function dropdown(){
-	$(".searchdomain").html("search here");
+	$("#searchdomain").html("search here");
 	$("#domaincontent").toggle();
 };
 
+//search domain bar in dropdown list
 function searchdomain(){
-	$(".searchdomain").html("");
+	$("#searchdomain").html("");
+	$("#searchdomain").keyup(function(){
+	var str=$("#searchdomain").html();
+	$.each(arrtem,function(i,item){
+					if(item.match(str)==null){
+						//alert("no match");
+						$(document.getElementById(item)).hide();
+					}
+					else{
+						//alert("match");
+						$(document.getElementById(item)).show();
+					}
+				});
+	});
 }
 
+//incomplete
 function hide(me){
 	var $this=$(me);
-	var str=$this.attr("id");
-	alert($this.attr("id"));
+	$("#domain").html($this.html());
+	$("#domain").attr("value",$this.html());
 	$("#domaincontent").hide();
 };
 
 
-
+//show content detail
 function showdetail(mySID){
-	alert(mySID);
 	$.post("SearchData",{SID : mySID},function(data){
-			alert(data.SID);
-			$("#imagebox").find("img").attr("src",data.SID.img);
-			alert("finish");
-			//$("#date").html(nowtime.toLocaleString());
-			//$("#domain").html(data.SID.domain);
-			//$("#msg").html(data.SID.msg);
+			$("#imagebox").find("img").attr("src",data[mySID]["img"]);
+			$("#recorddate").html(data[mySID]["time"]);
+			$("#recorddomain").html(data[mySID]["domain"]);
+			$("#recordmsg").html(data[mySID]["msg"]);
 			},
 			"json"
 	);
 };
   
-
-  
+//delete data
 function deletedata(deSID){ 
     $.post( "DeleteData", 
         { 
             SID : deSID,  
         } 
     ); 
-    //reload 
+    //reload
 };
