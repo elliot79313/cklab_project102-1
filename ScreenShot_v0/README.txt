@@ -1,0 +1,12 @@
+Database set
+
+CREATE DATABASE screenshot;
+USE screenshot;
+CREATE TABLE record(
+	SID INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	time BIGINT(20) NOT NULL,
+	domain VARCHAR(255) NOT NULL,
+	msg VARCHAR(255),
+	img LONGTEXT NOT NULL,
+	isdelete BIT(1) DEFAULT 0
+);
