@@ -14,68 +14,66 @@ import net.minidev.json.*;
 
 @SuppressWarnings("serial")
 public class SearchData extends HttpServlet {
-	
+
+	/*
+	 * Database setting =======================================================
+	 */
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 	static final String DB_URL = "jdbc:mysql://localhost:3306/";
-	static final String DB_NAME = "screenshotrecord";
+	static final String DB_NAME = "screenshot";
 
 	static final String USER = "root";
-	static final String PASS = "root";
-	
+	static final String PASS = "";
+
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		doPost(request, response);
 	}
-	
+
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
-		String SID = request.getParameter("SID")==null?"":request.getParameter("SID");;
-		String domain = request.getParameter("domain")==null?"":request.getParameter("domain");
-		String time1 = request.getParameter("time1")==null?"":request.getParameter("time1");
-		String time2 = request.getParameter("time2")==null?"":request.getParameter("time2");
-		
+
+		/*
+		 * Request parameter ==================================================
+		 */
+		String SID = request.getParameter("SID");
+		String domain = request.getParameter("domain") == null ? "" : request
+				.getParameter("domain");
+		String time1 = request.getParameter("time1") == null ? "" : request
+				.getParameter("time1");
+		String time2 = request.getParameter("time2") == null ? "" : request
+				.getParameter("time2");
+
 		Connection conn = null;
 		Statement stmt = null;
-		//out.println(SID);
 		try {
+			// connect to database
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(DB_URL + DB_NAME, USER, PASS);
-			
+
+			// SQL instruction
 			stmt = conn.createStatement();
-			Boolean check = false;
-			String sql = "Select * from record where ";
-			if(!check && !SID.equals("")){
-				sql = sql + "SID = '" + SID + "'";
-				check = true;
-			}
-			if(!check && !domain.equals("")){
-				sql = sql + "domain like '%" + domain + "%'";
-				check = true;
-			}else if(!domain.equals(""))
+			String sql = "Select * from record where 1 = 1";
+			// Search SID
+			if (!SID.equals(""))
+				sql = sql + " and SID = '" + SID + "'";
+			// Search domain
+			if (!domain.equals(""))
 				sql = sql + " and domain like '%" + domain + "%'";
-			
-			if(!check && !time1.equals("")){
-				sql = sql + "time >= '" + time1 + "'";
-				check = true;
-			}else if(!time1.equals(""))
-				sql = sql + " and time >= '" + time1 + "'";
-				
-			if(!check && !time2.equals("")){
-				sql = sql + "time <= '" + time2 + "'";
-				check = true;
-			}else if(!time2.equals(""))
-				sql = sql + " and time <= '" + time2 + "'";
-			
-			if(!check){
-				sql = "Select * from record";
-			}
-			
+			// Search time1
+			if (!time1.equals(""))
+				sql = sql + " and time1 >= '" + time1 + "'";
+			// Search time2
+			if (!time2.equals(""))
+				sql = sql + " and time2 <= '" + time2 + "'";
+
 			ResultSet rs = stmt.executeQuery(sql);
 			JSONObject record = new JSONObject();
+
+			// Response
 			while (rs.next()) {
-				
 				JSONObject temp = new JSONObject();
 				temp.put("time", rs.getString("time"));
 				temp.put("domain", rs.getString("domain"));
@@ -83,11 +81,11 @@ public class SearchData extends HttpServlet {
 				temp.put("img", rs.getString("img"));
 				record.put(rs.getString("SID"), temp);
 			}
-			if (! (record.isEmpty()))
+			if (!(record.isEmpty()))
 				out.println(record);
-			else{
+			else
 				throw new Exception("Can,t find.");
-			}
+
 			rs.close();
 			stmt.close();
 			conn.close();

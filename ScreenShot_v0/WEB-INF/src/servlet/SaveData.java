@@ -13,35 +13,44 @@ import net.minidev.json.*;
 
 @SuppressWarnings("serial")
 public class SaveData extends HttpServlet {
-	
+
+	/*
+	 * Database setting =======================================================
+	 */
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 	static final String DB_URL = "jdbc:mysql://localhost:3306/";
-	static final String DB_NAME = "screenshotrecord";
+	static final String DB_NAME = "screenshot";
 
 	static final String USER = "root";
-	static final String PASS = "root";
-	
+	static final String PASS = "";
+
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		doPost(request, response);
-		
+
 	}
-	
+
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
+
+		/*
+		 * Request parameter ==================================================
+		 */
 		String time = request.getParameter("time");
 		String domain = request.getParameter("domain");
 		String msg = request.getParameter("msg");
 		String img = request.getParameter("img");
-		String SID = request.getParameter("SID");
-				
+
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		try {
+			// Connect to database
 			Class.forName(JDBC_DRIVER);
 			conn = DriverManager.getConnection(DB_URL + DB_NAME, USER, PASS);
+
+			// SQL instruction
 			String sql = "INSERT INTO record (time, domain, msg, img) VALUES(?,?,?,?)";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, time);
@@ -49,12 +58,15 @@ public class SaveData extends HttpServlet {
 			stmt.setString(3, msg);
 			stmt.setString(4, img);
 			stmt.executeUpdate();
+
+			// Response
 			JSONObject record = new JSONObject();
 			record.put("time", time);
 			record.put("domain", domain);
 			record.put("msg", msg);
 			record.put("img", img);
 			out.println(record);
+
 			stmt.close();
 			conn.close();
 		} catch (SQLException se) {

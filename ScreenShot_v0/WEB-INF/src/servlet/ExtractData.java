@@ -14,20 +14,23 @@ import net.minidev.json.*;
 
 @SuppressWarnings("serial")
 public class ExtractData extends HttpServlet {
-	
+
+	/*
+	 * Database setting =======================================================
+	 */
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 	static final String DB_URL = "jdbc:mysql://localhost:3306/";
-	static final String DB_NAME = "screenshotrecord";
+	static final String DB_NAME = "screenshot";
 
 	static final String USER = "root";
-	static final String PASS = "root";
-	
+	static final String PASS = "";
+
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		doPost(request, response);
-		
+
 	}
-	
+
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		response.setContentType("text/html; charset=utf-8");
@@ -35,11 +38,17 @@ public class ExtractData extends HttpServlet {
 		Connection conn = null;
 		Statement stmt = null;
 		try {
+			// connect to database
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(DB_URL + DB_NAME, USER, PASS);
+			
+			// SQL instruction
 			stmt = conn.createStatement();
-			String sql = "Select * from record where isdelete = 0 LIMIT 13";
+			String sql = "Select * from record where isdelete = 0";
+			
 			ResultSet rs = stmt.executeQuery(sql);
+
+			// Response
 			JSONObject record = new JSONObject();
 			int index = 1;
 			while (rs.next()) {
@@ -47,15 +56,16 @@ public class ExtractData extends HttpServlet {
 				temp.put("time", rs.getString("time"));
 				temp.put("SID", rs.getString("SID"));
 				temp.put("domain", rs.getString("domain"));
-//				temp.put("msg", rs.getString("msg"));
-//				temp.put("img", rs.getString("img"));
+				// temp.put("msg", rs.getString("msg"));
+				// temp.put("img", rs.getString("img"));
 				record.put("" + index, temp);
 				index++;
 			}
-			if (! (record.isEmpty()))
+			if (!(record.isEmpty()))
 				out.println(record);
-			else 
+			else
 				throw new Exception("No record.");
+
 			rs.close();
 			stmt.close();
 			conn.close();
