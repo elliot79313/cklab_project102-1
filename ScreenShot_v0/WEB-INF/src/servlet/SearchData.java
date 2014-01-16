@@ -38,7 +38,8 @@ public class SearchData extends HttpServlet {
 		/*
 		 * Request parameter ==================================================
 		 */
-		String SID = request.getParameter("SID");
+		String SID = request.getParameter("SID") == null ? "" : request
+				.getParameter("SID");
 		String domain = request.getParameter("domain") == null ? "" : request
 				.getParameter("domain");
 		String time1 = request.getParameter("time1") == null ? "" : request
@@ -55,7 +56,7 @@ public class SearchData extends HttpServlet {
 
 			// SQL instruction
 			stmt = conn.createStatement();
-			String sql = "Select * from record where 1 = 1";
+			String sql = "Select * from record where isdelete = 0";
 			// Search SID
 			if (!SID.equals(""))
 				sql = sql + " and SID = '" + SID + "'";
@@ -64,10 +65,10 @@ public class SearchData extends HttpServlet {
 				sql = sql + " and domain like '%" + domain + "%'";
 			// Search time1
 			if (!time1.equals(""))
-				sql = sql + " and time1 >= '" + time1 + "'";
+				sql = sql + " and time >= '" + time1 + "'";
 			// Search time2
 			if (!time2.equals(""))
-				sql = sql + " and time2 <= '" + time2 + "'";
+				sql = sql + " and time <= '" + time2 + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);
 			JSONObject record = new JSONObject();
