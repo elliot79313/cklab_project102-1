@@ -6,7 +6,7 @@ body{
 }
 
 #container{
-	background-color: #DBD9D9;
+	background-color:rgba(149, 150, 175, 0.29);
 	position: absolute;
 	width: 1300px;
 	height: 635px;
@@ -55,6 +55,8 @@ body{
 	width:100px;
 	display:inline-block;
 	vertical-align:70%;
+	border-radius:4px;
+	background-color:white;
 }
 
 
@@ -102,7 +104,7 @@ body{
 }
 
 li{
-    border:2px solid #DBD9D9;
+    border:2px solid rgba(149, 150, 175, 0);
     list-style:none;
 	height:40px;
 }
@@ -130,10 +132,10 @@ li .time:hover{
 
 li .remove{
     display:inline-block;
-    background:#DBD9D9;
     width:25%;
 	height: 40px;
 	vertical-align:top;
+	
 }
 
 li .remove button{
@@ -143,6 +145,8 @@ li .remove button{
 	left: 5%;
 	width:90%;
 	height:80%;
+	border-radius: 4px;
+	background-color: white;
 }
 
 #content{
@@ -151,19 +155,49 @@ li .remove button{
 	top:20px;
 	width:750px;
 	height:595px;
-	background-color:gray;
+	background-color:rgba(8, 97, 109, 0.39);
+	font-size:20px;
+	font-family:arial;
+	font-weight:bold;
+	padding:5px;
+	border-radius:6px;
 }
 
 #imagebox{
-	padding:10px 10px 10px 10px;
-	height:430px;
+	padding:10px 10px 0px 10px;
+	height:420px;
 }
+
 #recordimage{
-	width:730px;
-	height:430px;
+	width: 760px;
+	height: 430px;
+	margin-left: -15px;
+	margin-top: -15px;;	
+}
+
+#recorddomain{
+	vertical-align:middle;
+	display:inline-block;
+	width:640px;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	font-family: Times New Roman;
+	font-weight:normal;
+}
+
+#recordmsg{
+	position:absolute;
+	margin-left:10px;
+	overflow-y:scroll;
+	display:block;
+	background:rgb(194, 213, 218);
+	width: 730px;
+	height: 87px;
+	border:1px solid rgb(213, 212, 231);
+	border-radius: 4px;
+	font-family: Times New Roman;
+	font-weight:normal;
 	
 }
 
-#msg{
-	
-}
+

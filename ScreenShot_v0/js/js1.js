@@ -1,8 +1,9 @@
 $(function(){ 
 	//initial state append list
-    var $ul =$("ul"); 
+	$("#startpage").hide();
+    var $ul =$("ul");
     $.get("ExtractData", 
-        function(data){ 
+        function(data){
                 $.each(data,function(i,item){ 
 					nowtime=new Date();
 					nowtime.setTime(item.time);
@@ -142,8 +143,10 @@ function hide(me){
 //show content detail
 function showdetail(mySID){
 	$.post("SearchData",{SID : mySID},function(data){
+			$("#startpage").show();
 			$("#imagebox").find("img").attr("src",data[mySID]["img"]);
-			$("#recorddate").html(data[mySID]["time"]);
+			nowtime.setTime(data[mySID]["time"]);
+			$("#recorddate").html(nowtime.toLocaleString());
 			$("#recorddomain").html(data[mySID]["domain"]);
 			$("#recordmsg").html(data[mySID]["msg"]);
 			},
